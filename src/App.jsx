@@ -1,17 +1,5 @@
+import { useState, useEffect } from 'react'
 import './App.css'
-
-// Student details
-const student1 = {
-  name: 'Anu',
-  department: 'CSE',
-  year: '3rd Year'
-}
-
-const student2 = {
-  name: 'Bala',
-  department: 'Computer Science',
-  year: '3rd Year'
-}
 
 // Header Component
 function Header() {
@@ -22,13 +10,33 @@ function Header() {
   )
 }
 
-// Reusable StudentProfile Component
-function StudentProfile({ name, department, year }) {
+// StudentProfile Component
+function StudentProfile({ name, department, year, practiceCount }) {
+
+  useEffect(() => {
+    // Save the current document title
+    const previousTitle = document.title
+
+    // Update title when practice count changes
+    document.title = `Practice Sessions: ${practiceCount}`
+
+    // Cleanup function
+    return () => {
+      document.title = previousTitle
+    }
+  }, [practiceCount])
+
   return (
     <div className="student-profile">
       <p><strong>Name:</strong> {name}</p>
+
       <p><strong>Department:</strong> {department}</p>
+
       <p><strong>Year:</strong> {year}</p>
+
+      <p>
+        <strong>Practice Sessions Completed:</strong> {practiceCount}
+      </p>
     </div>
   )
 }
@@ -44,27 +52,45 @@ function Footer() {
 
 // Main App Component
 function App() {
+
+  // State for completed practice sessions
+  const [practiceCount, setPracticeCount] = useState(0)
+
+  // State for showing/hiding the profile
+  const [showProfile, setShowProfile] = useState(true)
+
   return (
     <div className="app">
+
       <Header />
 
       <main>
-        <h2>Student 1</h2>
-        <StudentProfile
-          name={student1.name}
-          department={student1.department}
-          year={student1.year}
-        />
 
-        <h2>Student 2</h2>
-        <StudentProfile
-          name={student2.name}
-          department={student2.department}
-          year={student2.year}
-        />
+        <button onClick={() => setPracticeCount(practiceCount + 1)}>
+          Complete Practice
+        </button>
+
+        <button onClick={() => setPracticeCount(0)}>
+          Reset
+        </button>
+
+        <button onClick={() => setShowProfile(!showProfile)}>
+          {showProfile ? 'Hide Profile' : 'Show Profile'}
+        </button>
+
+        {showProfile && (
+          <StudentProfile
+            name="Anu"
+            department="CSE"
+            year="3rd Year"
+            practiceCount={practiceCount}
+          />
+        )}
+
       </main>
 
       <Footer />
+
     </div>
   )
 }
