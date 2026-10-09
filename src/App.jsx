@@ -5,37 +5,49 @@ import './App.css'
 function Header() {
   return (
     <header>
-      <h1>Student Management System</h1>
+      <h1>Amazon Product Store</h1>
     </header>
   )
 }
 
-// StudentProfile Component
-function StudentProfile({ name, department, year, practiceCount }) {
-
+// ProductCard Component
+function ProductCard({
+  productName,
+  price,
+  quantity,
+  selectedColor,
+  deliveryCity
+}) {
   useEffect(() => {
-    // Save the current document title
+    // Save the previous browser tab title
     const previousTitle = document.title
 
-    // Update title when practice count changes
-    document.title = `Practice Sessions: ${practiceCount}`
+    // Update the tab title
+    document.title = `${productName} | ${selectedColor} | Cart: ${quantity}`
 
-    // Cleanup function
+    // Restore the previous title when the effect cleans up
     return () => {
       document.title = previousTitle
     }
-  }, [practiceCount])
+  }, [productName, selectedColor, quantity])
+
+  const totalAmount = quantity * price
 
   return (
-    <div className="student-profile">
-      <p><strong>Name:</strong> {name}</p>
+    <div className="product-card">
+      <h2>Product Details</h2>
 
-      <p><strong>Department:</strong> {department}</p>
-
-      <p><strong>Year:</strong> {year}</p>
-
+      <p><strong>Product:</strong> {productName}</p>
+      <p><strong>Price:</strong> ₹{price}</p>
+      <p><strong>Colour:</strong> {selectedColor}</p>
+      <p><strong>Deliver to:</strong> {deliveryCity}</p>
+      <p><strong>Cart Quantity:</strong> {quantity}</p>
+      <p><strong>Total Amount:</strong> ₹{totalAmount}</p>
       <p>
-        <strong>Practice Sessions Completed:</strong> {practiceCount}
+        <strong>Status:</strong>{' '}
+        {quantity === 0
+          ? 'Cart is empty'
+          : 'Product added to cart'}
       </p>
     </div>
   )
@@ -45,52 +57,82 @@ function StudentProfile({ name, department, year, practiceCount }) {
 function Footer() {
   return (
     <footer>
-      <p>© 2026 Student Management System</p>
+      <p>© 2026 Amazon Product Store</p>
     </footer>
   )
 }
 
 // Main App Component
 function App() {
+  const [quantity, setQuantity] = useState(0)
+  const [selectedColor, setSelectedColor] = useState('Black')
+  const [deliveryCity, setDeliveryCity] = useState('Coimbatore')
+  const [showProduct, setShowProduct] = useState(true)
 
-  // State for completed practice sessions
-  const [practiceCount, setPracticeCount] = useState(0)
-
-  // State for showing/hiding the profile
-  const [showProfile, setShowProfile] = useState(true)
+  const productName = 'Wireless Mouse'
+  const price = 499
 
   return (
     <div className="app">
-
       <Header />
 
       <main>
+        <div className="controls">
+          <label htmlFor="color">Select Colour: </label>
+          <select
+            id="color"
+            value={selectedColor}
+            onChange={(event) => setSelectedColor(event.target.value)}
+          >
+            <option value="Black">Black</option>
+            <option value="Blue">Blue</option>
+            <option value="White">White</option>
+          </select>
 
-        <button onClick={() => setPracticeCount(practiceCount + 1)}>
-          Complete Practice
-        </button>
+          <br />
 
-        <button onClick={() => setPracticeCount(0)}>
-          Reset
-        </button>
+          <label htmlFor="city">Delivery City: </label>
+          <input
+            id="city"
+            type="text"
+            value={deliveryCity}
+            onChange={(event) => setDeliveryCity(event.target.value)}
+          />
+        </div>
 
-        <button onClick={() => setShowProfile(!showProfile)}>
-          {showProfile ? 'Hide Profile' : 'Show Profile'}
-        </button>
+        <div className="buttons">
+          <button onClick={() => setQuantity(quantity + 1)}>
+            Add to Cart
+          </button>
 
-        {showProfile && (
-          <StudentProfile
-            name="Anu"
-            department="CSE"
-            year="3rd Year"
-            practiceCount={practiceCount}
+          <button
+            onClick={() => setQuantity(quantity - 1)}
+            disabled={quantity === 0}
+          >
+            Remove One
+          </button>
+
+          <button onClick={() => setQuantity(0)}>
+            Reset Cart
+          </button>
+
+          <button onClick={() => setShowProduct(!showProduct)}>
+            {showProduct ? 'Hide Product' : 'Show Product'}
+          </button>
+        </div>
+
+        {showProduct && (
+          <ProductCard
+            productName={productName}
+            price={price}
+            quantity={quantity}
+            selectedColor={selectedColor}
+            deliveryCity={deliveryCity}
           />
         )}
-
       </main>
 
       <Footer />
-
     </div>
   )
 }

@@ -2,37 +2,67 @@
   font-family: Arial, sans-serif;
   text-align: center;
   padding: 20px;
+  color: #222;
 }
 
 header h1 {
-  color: blue;
+  color: #146eb4;
   margin-bottom: 30px;
 }
 
 main {
-  max-width: 600px;
+  max-width: 650px;
   margin: auto;
 }
 
-button {
-  padding: 10px 15px;
-  margin: 5px;
-  cursor: pointer;
+.controls {
+  margin-bottom: 20px;
+  line-height: 2.5;
 }
 
-.student-profile {
-  border: 2px solid black;
+select,
+input {
+  padding: 8px;
+  margin: 5px;
+  font-size: 15px;
+}
+
+.buttons {
+  margin: 20px 0;
+}
+
+button {
+  padding: 10px 14px;
+  margin: 5px;
+  cursor: pointer;
+  border: none;
+  border-radius: 5px;
+  background-color: #f0c14b;
+}
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.product-card {
+  border: 2px solid #146eb4;
+  border-radius: 8px;
   padding: 20px;
   margin-top: 25px;
-  border-radius: 8px;
   text-align: left;
 }
 
-.student-profile p {
-  margin: 10px 0;
+.product-card h2 {
+  text-align: center;
+  color: #146eb4;
+}
+
+.product-card p {
+  margin: 12px 0;
 }
 
 footer {
-  margin-top: 40px;
+  margin-top: 35px;
   padding: 15px;
 }
