@@ -1,7 +1,8 @@
+
 import { useState, useEffect } from 'react'
 import './App.css'
 
-// 1. Header Component
+// Header Component
 function Header() {
   return (
     <header className="header">
@@ -10,7 +11,7 @@ function Header() {
   )
 }
 
-// 2. ProductCard Component
+// ProductCard Component
 function ProductCard({
   productName,
   price,
@@ -18,6 +19,14 @@ function ProductCard({
   selectedColor,
   deliveryCity
 }) {
+  // Select the correct image for the chosen colour
+  const mouseImages = {
+    Black: '/mouse-black.png',
+    Blue: '/mouse-blue.png',
+    White: '/mouse-white.png'
+  }
+
+  // Update browser tab title when product details change
   useEffect(() => {
     const previousTitle = document.title
 
@@ -34,7 +43,10 @@ function ProductCard({
   return (
     <div className="product-card">
       <div className="product-image">
-        <img src="/mouse.png" alt="Wireless Mouse" />
+        <img
+          src={mouseImages[selectedColor]}
+          alt={`${selectedColor} Wireless Mouse`}
+        />
       </div>
 
       <div className="product-details">
@@ -50,7 +62,10 @@ function ProductCard({
         <hr />
 
         <p>Cart Quantity: {quantity}</p>
-        <p className="total">Total Amount: ₹{totalAmount}</p>
+
+        <p className="total">
+          Total Amount: ₹{totalAmount}
+        </p>
 
         <p className="status">
           {quantity === 0
@@ -62,7 +77,7 @@ function ProductCard({
   )
 }
 
-// 3. Footer Component
+// Footer Component
 function Footer() {
   return (
     <footer>
@@ -99,6 +114,7 @@ function App() {
         <div className="controls">
           <div className="control-group">
             <label htmlFor="color">Product colour</label>
+
             <select
               id="color"
               value={selectedColor}
@@ -114,6 +130,7 @@ function App() {
 
           <div className="control-group">
             <label htmlFor="city">Delivery city</label>
+
             <input
               id="city"
               type="text"
@@ -134,7 +151,9 @@ function App() {
           </button>
 
           <button
-            onClick={() => setQuantity(q => Math.max(0, q - 1))}
+            onClick={() =>
+              setQuantity(q => Math.max(0, q - 1))
+            }
             disabled={quantity === 0}
           >
             Remove One
