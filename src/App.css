@@ -1,68 +1,187 @@
-.app {
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
   font-family: Arial, sans-serif;
-  text-align: center;
-  padding: 20px;
-  color: #222;
+  background: #f1f3f6;
+  color: #111;
 }
 
-header h1 {
-  color: #146eb4;
-  margin-bottom: 30px;
+.app {
+  width: 100%;
+  max-width: 900px;
+  min-height: 100vh;
+  margin: 0 auto;
 }
 
-main {
-  max-width: 650px;
-  margin: auto;
-}
-
-.controls {
-  margin-bottom: 20px;
-  line-height: 2.5;
-}
-
-select,
-input {
-  padding: 8px;
-  margin: 5px;
-  font-size: 15px;
-}
-
-.buttons {
-  margin: 20px 0;
-}
-
-button {
-  padding: 10px 14px;
-  margin: 5px;
-  cursor: pointer;
-  border: none;
-  border-radius: 5px;
-  background-color: #f0c14b;
-}
-
-button:disabled {
-  cursor: not-allowed;
-  opacity: 0.5;
-}
-
-.product-card {
-  border: 2px solid #146eb4;
-  border-radius: 8px;
-  padding: 20px;
-  margin-top: 25px;
+.header {
+  background: #131921;
+  padding: 12px 10px;
   text-align: left;
 }
 
-.product-card h2 {
-  text-align: center;
-  color: #146eb4;
+.header h1 {
+  margin: 0;
+  color: #ff9900;
+  font-size: 14px;
+  font-weight: normal;
 }
 
-.product-card p {
-  margin: 12px 0;
+main {
+  padding: 35px 50px 10px;
+}
+
+.product-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 10px;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  margin-bottom: 16px;
+}
+
+.product-image {
+  width: 80px;
+  height: 116px;
+  flex-shrink: 0;
+  background: #edf1f4;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.product-image img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: 4px;
+}
+
+.product-details {
+  flex: 1;
+  min-width: 0;
+}
+
+.product-details h2 {
+  color: #146eb4;
+  font-size: 13px;
+  font-weight: normal;
+  margin: 0 0 6px;
+}
+
+.product-details p {
+  font-size: 9px;
+  margin: 5px 0;
+}
+
+.product-details .price {
+  font-size: 11px;
+}
+
+.price small {
+  font-size: 9px;
+  color: #555;
+}
+
+.product-details hr {
+  border: 0;
+  border-top: 1px solid #eee;
+  margin: 8px 0;
+}
+
+.product-details .total {
+  font-size: 10px;
+}
+
+.product-details .status {
+  color: #666;
+  font-size: 9px;
+}
+
+.controls {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 25px;
+}
+
+.control-group {
+  flex: 1;
+  min-width: 0;
+}
+
+.control-group label {
+  display: block;
+  font-size: 9px;
+  margin-bottom: 5px;
+}
+
+.control-group select,
+.control-group input {
+  display: block;
+  width: 100%;
+  height: 27px;
+  padding: 5px 7px;
+  font-size: 10px;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 3px;
+}
+
+.buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+button {
+  padding: 6px 9px;
+  border: 1px solid #ddd;
+  border-radius: 18px;
+  background: white;
+  cursor: pointer;
+  font-size: 9px;
+  color: #222;
+}
+
+button.add-button {
+  background: #ffd814;
+  border-color: #fcd200;
+}
+
+button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
 }
 
 footer {
-  margin-top: 35px;
-  padding: 15px;
+  text-align: center;
+  padding: 10px;
+  font-size: 9px;
+  color: #555;
+}
+
+@media (max-width: 480px) {
+  main {
+    padding: 20px 12px 10px;
+  }
+
+  .product-card {
+    gap: 9px;
+  }
+
+  .product-image {
+    width: 75px;
+    height: 110px;
+  }
+
+  .controls {
+    gap: 8px;
+  }
 }

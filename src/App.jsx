@@ -1,16 +1,16 @@
 import { useState, useEffect } from 'react'
 import './App.css'
 
-// Header Component
+// 1. Header Component
 function Header() {
   return (
-    <header>
+    <header className="header">
       <h1>Amazon Product Store</h1>
     </header>
   )
 }
 
-// ProductCard Component
+// 2. ProductCard Component
 function ProductCard({
   productName,
   price,
@@ -19,13 +19,11 @@ function ProductCard({
   deliveryCity
 }) {
   useEffect(() => {
-    // Save the previous browser tab title
     const previousTitle = document.title
 
-    // Update the tab title
-    document.title = `${productName} | ${selectedColor} | Cart: ${quantity}`
+    document.title =
+      `${productName} | ${selectedColor} | Cart: ${quantity}`
 
-    // Restore the previous title when the effect cleans up
     return () => {
       document.title = previousTitle
     }
@@ -35,29 +33,40 @@ function ProductCard({
 
   return (
     <div className="product-card">
-      <h2>Product Details</h2>
+      <div className="product-image">
+        <img src="/mouse.png" alt="Wireless Mouse" />
+      </div>
 
-      <p><strong>Product:</strong> {productName}</p>
-      <p><strong>Price:</strong> ₹{price}</p>
-      <p><strong>Colour:</strong> {selectedColor}</p>
-      <p><strong>Deliver to:</strong> {deliveryCity}</p>
-      <p><strong>Cart Quantity:</strong> {quantity}</p>
-      <p><strong>Total Amount:</strong> ₹{totalAmount}</p>
-      <p>
-        <strong>Status:</strong>{' '}
-        {quantity === 0
-          ? 'Cart is empty'
-          : 'Product added to cart'}
-      </p>
+      <div className="product-details">
+        <h2>{productName}</h2>
+
+        <p className="price">
+          ₹{price} <small>per item</small>
+        </p>
+
+        <p>Colour: {selectedColor}</p>
+        <p>Deliver to: {deliveryCity}</p>
+
+        <hr />
+
+        <p>Cart Quantity: {quantity}</p>
+        <p className="total">Total Amount: ₹{totalAmount}</p>
+
+        <p className="status">
+          {quantity === 0
+            ? 'Cart is empty'
+            : 'Product added to cart'}
+        </p>
+      </div>
     </div>
   )
 }
 
-// Footer Component
+// 3. Footer Component
 function Footer() {
   return (
     <footer>
-      <p>© 2026 Amazon Product Store</p>
+      © 2026 Amazon Product Store
     </footer>
   )
 }
@@ -77,50 +86,6 @@ function App() {
       <Header />
 
       <main>
-        <div className="controls">
-          <label htmlFor="color">Select Colour: </label>
-          <select
-            id="color"
-            value={selectedColor}
-            onChange={(event) => setSelectedColor(event.target.value)}
-          >
-            <option value="Black">Black</option>
-            <option value="Blue">Blue</option>
-            <option value="White">White</option>
-          </select>
-
-          <br />
-
-          <label htmlFor="city">Delivery City: </label>
-          <input
-            id="city"
-            type="text"
-            value={deliveryCity}
-            onChange={(event) => setDeliveryCity(event.target.value)}
-          />
-        </div>
-
-        <div className="buttons">
-          <button onClick={() => setQuantity(quantity + 1)}>
-            Add to Cart
-          </button>
-
-          <button
-            onClick={() => setQuantity(quantity - 1)}
-            disabled={quantity === 0}
-          >
-            Remove One
-          </button>
-
-          <button onClick={() => setQuantity(0)}>
-            Reset Cart
-          </button>
-
-          <button onClick={() => setShowProduct(!showProduct)}>
-            {showProduct ? 'Hide Product' : 'Show Product'}
-          </button>
-        </div>
-
         {showProduct && (
           <ProductCard
             productName={productName}
@@ -130,6 +95,59 @@ function App() {
             deliveryCity={deliveryCity}
           />
         )}
+
+        <div className="controls">
+          <div className="control-group">
+            <label htmlFor="color">Product colour</label>
+            <select
+              id="color"
+              value={selectedColor}
+              onChange={(event) =>
+                setSelectedColor(event.target.value)
+              }
+            >
+              <option value="Black">Black</option>
+              <option value="Blue">Blue</option>
+              <option value="White">White</option>
+            </select>
+          </div>
+
+          <div className="control-group">
+            <label htmlFor="city">Delivery city</label>
+            <input
+              id="city"
+              type="text"
+              value={deliveryCity}
+              onChange={(event) =>
+                setDeliveryCity(event.target.value)
+              }
+            />
+          </div>
+        </div>
+
+        <div className="buttons">
+          <button
+            className="add-button"
+            onClick={() => setQuantity(q => q + 1)}
+          >
+            Add to Cart
+          </button>
+
+          <button
+            onClick={() => setQuantity(q => Math.max(0, q - 1))}
+            disabled={quantity === 0}
+          >
+            Remove One
+          </button>
+
+          <button onClick={() => setQuantity(0)}>
+            Reset Cart
+          </button>
+
+          <button onClick={() => setShowProduct(v => !v)}>
+            {showProduct ? 'Hide Product' : 'Show Product'}
+          </button>
+        </div>
       </main>
 
       <Footer />
